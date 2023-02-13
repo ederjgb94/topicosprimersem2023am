@@ -1,3 +1,4 @@
+import 'package:clasetopicosuno/producto.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -33,6 +34,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  List<Producto> productos = [
+    Producto(
+      id: 1,
+      nombre: "AAS D ASDASDA SD AASD AS DAD A SDAS ASDAS ASD A ASDA S",
+      precio: 40.5,
+    ),
+    Producto(
+      id: 2,
+      nombre: "B",
+      precio: 10.0,
+    ),
+  ];
 
   void _incrementCounter() {
     setState(() {
@@ -47,90 +60,49 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         centerTitle: true,
       ),
-      body: Container(
-        // color: Colors.green,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            // mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 120,
-                    height: 200,
-                    color: Colors.red,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    width: 120,
-                    height: 200,
-                    color: Colors.pink,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    width: 120,
-                    height: 200,
-                    color: Colors.yellow,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 300,
-                    height: 200,
-                    color: Colors.blue,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 100,
-                    height: 200,
-                    color: Colors.teal,
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 200,
-                      color: Colors.blue,
-                      child: Center(
-                        child: Text('Algo'),
+      body: ListView(
+        children: productos
+            .map(
+              (producto) => Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 20,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      producto.id.toString(),
+                      style: TextStyle(
+                        fontSize: 30,
                       ),
                     ),
-                  ),
-                  Container(
-                    width: 100,
-                    height: 200,
-                    color: Colors.red,
-                  ),
-                ],
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20,
+                        ),
+                        child: Text(
+                          producto.nombre,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: TextStyle(
+                            fontSize: 30,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      producto.precio.toString(),
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Container(
-                height: 300,
-                width: 200,
-                color: Colors.grey,
-              ),
-            ],
-          ),
-        ),
+            )
+            .toList(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
