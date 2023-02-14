@@ -100,10 +100,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ElevatedButton(
               onPressed: () {},
-              style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(
-                  Colors.teal,
-                ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal,
               ),
               child: Text('Guardar'),
             ),
