@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class Producto {
-  int id = 0;
+  String codigo = '';
   String nombre = '';
   double precio = 0.0;
 
   Producto({
-    required this.id,
+    required this.codigo,
     required this.nombre,
     required this.precio,
   }) {}

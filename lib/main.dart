@@ -1,5 +1,7 @@
 import 'package:clasetopicosuno/producto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -33,82 +36,86 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  List<Producto> productos = [
-    Producto(
-      id: 1,
-      nombre: "AAS D ASDASDA SD AASD AS DAD A SDAS ASDAS ASD A ASDA S",
-      precio: 40.5,
-    ),
-    Producto(
-      id: 2,
-      nombre: "B",
-      precio: 10.0,
-    ),
-  ];
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(widget.title),
+        // title: Text(widget.title),
+        toolbarHeight: 0,
         centerTitle: true,
+        backgroundColor: Colors.transparent,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+        ),
+        elevation: 0,
       ),
-      body: ListView(
-        children: productos
-            .map(
-              (producto) => Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 20,
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      producto.id.toString(),
-                      style: TextStyle(
-                        fontSize: 30,
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20,
-                        ),
-                        child: Text(
-                          producto.nombre,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          style: TextStyle(
-                            fontSize: 30,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Text(
-                      producto.precio.toString(),
-                      style: TextStyle(
-                        fontSize: 30,
-                      ),
-                    ),
-                  ],
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(
+          vertical: 80,
+          horizontal: 30,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Nuevo\nProducto',
+              style: GoogleFonts.rubik(
+                fontSize: 32,
+                fontWeight: FontWeight.w700,
+                color: Colors.grey.shade800,
+                letterSpacing: 3,
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Código',
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Nombre',
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Precio',
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(
+                  Colors.teal,
                 ),
               ),
-            )
-            .toList(),
+              child: Text('Guardar'),
+            ),
+            Image.asset('assets/imagen.png'),
+          ],
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }
