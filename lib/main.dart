@@ -1,4 +1,5 @@
 import 'package:clasetopicosuno/producto.dart';
+import 'package:clasetopicosuno/vistas/ver_productos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,6 +37,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  TextEditingController codigoController = TextEditingController();
+  TextEditingController nombreController = TextEditingController();
+  TextEditingController precioController = TextEditingController();
+
+  List<Producto> productos = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,14 +52,14 @@ class _MyHomePageState extends State<MyHomePage> {
         toolbarHeight: 0,
         centerTitle: true,
         backgroundColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle(
+        systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.dark,
         ),
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           vertical: 80,
           horizontal: 30,
         ),
@@ -68,42 +75,77 @@ class _MyHomePageState extends State<MyHomePage> {
                 letterSpacing: 3,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             TextField(
-              decoration: InputDecoration(
+              controller: codigoController,
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Código',
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             TextField(
+              controller: nombreController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Nombre',
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             TextField(
+              controller: precioController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Precio',
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Producto producto = Producto(
+                  codigo: codigoController.text,
+                  nombre: nombreController.text,
+                  precio: double.parse(precioController.text),
+                );
+                productos.add(producto);
+
+                for (var producto in productos) {
+                  print(producto.toMap());
+                }
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.teal,
               ),
-              child: Text('Guardar'),
+              child: const Text('Guardar'),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.pink.shade300,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return VerProductos(
+                        productos: productos,
+                      );
+                    },
+                  ),
+                );
+              },
+              child: Text('Ver Productos'),
             ),
             Image.asset('assets/imagen.png'),
           ],

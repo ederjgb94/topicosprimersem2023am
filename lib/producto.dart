@@ -10,4 +10,12 @@ class Producto {
     required this.nombre,
     required this.precio,
   }) {}
+
+  Map<String, dynamic> toMap() {
+    return {
+      'codigo': codigo,
+      'nombre': nombre,
+      'precio': precio,
+    };
+  }
 }
