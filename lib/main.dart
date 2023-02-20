@@ -1,4 +1,5 @@
 import 'package:clasetopicosuno/producto.dart';
+import 'package:clasetopicosuno/vistas/crear_producto.dart';
 import 'package:clasetopicosuno/vistas/ver_productos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController codigoController = TextEditingController();
   TextEditingController nombreController = TextEditingController();
   TextEditingController precioController = TextEditingController();
-
+  bool errorNombre = false;
   List<Producto> productos = [];
 
   @override
@@ -58,98 +59,68 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(
-          vertical: 80,
-          horizontal: 30,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Nuevo\nProducto',
-              style: GoogleFonts.rubik(
-                fontSize: 32,
-                fontWeight: FontWeight.w700,
-                color: Colors.grey.shade800,
-                letterSpacing: 3,
-              ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal.shade300,
             ),
-            const SizedBox(
-              height: 30,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return CrearProducto();
+                  },
+                ),
+              ).then(
+                (value) {
+                  // String codigo = value['codigo'];
+                  // String nombre = value['nombre'];
+                  // double precio = double.parse(value['precio']);
+                  Producto p = new Producto(
+                    codigo: value['codigo'],
+                    nombre: value['nombre'],
+                    precio: value['precio'],
+                  );
+                  productos.add(p);
+                },
+              );
+            },
+            child: Text('Crear Producto'),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.pink.shade300,
             ),
-            TextField(
-              controller: codigoController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Código',
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            TextField(
-              controller: nombreController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Nombre',
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            TextField(
-              controller: precioController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Precio',
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Producto producto = Producto(
-                  codigo: codigoController.text,
-                  nombre: nombreController.text,
-                  precio: double.parse(precioController.text),
-                );
-                productos.add(producto);
-
-                for (var producto in productos) {
-                  print(producto.toMap());
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal,
-              ),
-              child: const Text('Guardar'),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.pink.shade300,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return VerProductos(
-                        productos: productos,
-                      );
-                    },
-                  ),
-                );
-              },
-              child: Text('Ver Productos'),
-            ),
-            Image.asset('assets/imagen.png'),
-          ],
-        ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return VerProductos(
+                      productos: productos,
+                    );
+                  },
+                ),
+              );
+            },
+            child: Text('Ver Productos'),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Image.asset('assets/imagen.png'),
+        ],
       ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {},
