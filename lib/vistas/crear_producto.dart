@@ -65,11 +65,10 @@ class CrearProducto extends StatelessWidget {
               //   precio: double.parse(precioController.text),
               // );
 
-              Navigator.pop(context, {
-                'codigo': 'fkml340320',
-                'nombre': 'Tal',
-                'precio': 4.5,
-              });
+              Navigator.pop(
+                context,
+                Producto(codigo: 'Ab', nombre: 'nombre', precio: 4.5),
+              );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.teal,
