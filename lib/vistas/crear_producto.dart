@@ -2,11 +2,21 @@ import 'package:clasetopicosuno/producto.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CrearProducto extends StatelessWidget {
+class CrearProducto extends StatefulWidget {
   CrearProducto({super.key});
+
+  @override
+  State<CrearProducto> createState() => _CrearProductoState();
+}
+
+class _CrearProductoState extends State<CrearProducto> {
   final TextEditingController codigoController = TextEditingController();
+
   final TextEditingController nombreController = TextEditingController();
+
   final TextEditingController precioController = TextEditingController();
+
+  bool _error = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +52,16 @@ class CrearProducto extends StatelessWidget {
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Nombre',
+              errorText: _error ? 'tu texto esta mal' : null,
             ),
+            onChanged: (value) {
+              setState(() {
+                if (value.contains('s'))
+                  _error = true;
+                else
+                  _error = false;
+              });
+            },
           ),
           const SizedBox(
             height: 30,
@@ -59,12 +78,6 @@ class CrearProducto extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              // Producto producto = Producto(
-              //   codigo: codigoController.text,
-              //   nombre: nombreController.text,
-              //   precio: double.parse(precioController.text),
-              // );
-
               Navigator.pop(
                 context,
                 Producto(codigo: 'Ab', nombre: 'nombre', precio: 4.5),
@@ -74,6 +87,15 @@ class CrearProducto extends StatelessWidget {
               backgroundColor: Colors.teal,
             ),
             child: const Text('Guardar'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.grey,
+            ),
+            child: const Text('Cancelar'),
           ),
         ],
       ),

@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   // String nombre = value['nombre'];
                   // double precio = double.parse(value['precio']);
 
-                  productos.add(value);
+                  if (value != null) productos.add(value);
                 },
               );
             },
