@@ -1,12 +1,40 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:clasetopicosuno/producto.dart';
 import 'package:clasetopicosuno/vistas/crear_producto.dart';
 import 'package:clasetopicosuno/vistas/ver_productos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
+
+  await Hive.initFlutter();
+
+  var box = await Hive.openBox('myBox');
+
+  List<Map<String, dynamic>> productos = [
+    {
+      'id': 1,
+      'codigo': '34402304',
+      'nombre': 'Coca',
+      'precio': 18,
+    },
+    {
+      'id': 2,
+      'codigo': '454544',
+      'nombre': 'Pepsi',
+      'precio': 19,
+    }
+  ];
+  box.put('productos', productos);
+  List<dynamic> info = box.get('productos');
+  print(info[1]['nombre']);
 }
 
 class MyApp extends StatelessWidget {
@@ -125,4 +153,9 @@ class _MyHomePageState extends State<MyHomePage> {
       // ),
     );
   }
+}
+
+//    () => null
+algo() {
+  return 4 + 5;
 }
