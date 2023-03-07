@@ -1,5 +1,6 @@
 import 'package:clasetopicosuno/producto.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class VerProductos extends StatelessWidget {
   final List<Producto> productos;
@@ -10,19 +11,21 @@ class VerProductos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var boxproductos = Hive.box('productos').values.toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Productos'),
       ),
       body: ListView(
-        children: productos
+        // children: productos
+        children: boxproductos
             .map(
-              (e) => Container(
+              (producto) => Container(
                 child: Row(
                   children: [
-                    Text(e.codigo),
-                    Text(e.nombre),
-                    Text(e.precio.toString()),
+                    Text(producto.codigo),
+                    Text(producto.nombre),
+                    Text(producto.precio.toString()),
                   ],
                 ),
               ),

@@ -80,7 +80,11 @@ class _CrearProductoState extends State<CrearProducto> {
             onPressed: () {
               Navigator.pop(
                 context,
-                Producto(codigo: 'Ab', nombre: 'nombre', precio: 4.5),
+                Producto(
+                  codigo: codigoController.text,
+                  nombre: nombreController.text,
+                  precio: double.parse(precioController.text),
+                ),
               );
             },
             style: ElevatedButton.styleFrom(

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:clasetopicosuno/producto.dart';
 import 'package:clasetopicosuno/vistas/crear_producto.dart';
@@ -16,25 +17,57 @@ void main() async {
 
   await Hive.initFlutter();
 
-  var box = await Hive.openBox('myBox');
+  Hive.registerAdapter(ProductoAdapter());
 
-  List<Map<String, dynamic>> productos = [
-    {
-      'id': 1,
-      'codigo': '34402304',
-      'nombre': 'Coca',
-      'precio': 18,
-    },
-    {
-      'id': 2,
-      'codigo': '454544',
-      'nombre': 'Pepsi',
-      'precio': 19,
-    }
+  // List<Map<String, dynamic>> productos = [
+  //   {
+  //     'id': 1,
+  //     'codigo': '34402304',
+  //     'nombre': 'Coca',
+  //     'precio': 18,
+  //   },
+  //   {
+  //     'id': 2,
+  //     'codigo': '454544',
+  //     'nombre': 'Pepsi',
+  //     'precio': 19,
+  //   }
+  // ];
+  // box.put('productos', productos);
+  // List<dynamic> info = box.get('productos');
+  // var suma = info[1]['precio'] + info[0]['precio'];
+  // print(suma);
+
+  //*** */
+  //Probando Clases en Hive
+  //** */
+
+  var box = await Hive.openBox('productos');
+
+  //les paso el random para generar productos
+  //tipo aleatorios para apreciar mejor el ADD
+  var random = Random();
+
+  var nombres_productos = [
+    'Coca Cola',
+    'Pepsi',
+    'Fanta',
+    'Sprite',
+    'Manzana Verde',
+    'Manzana Roja',
+    'Manzana Amarilla',
+    'Manzana Blanca',
+    'Manzana Negra',
   ];
-  box.put('productos', productos);
-  List<dynamic> info = box.get('productos');
-  print(info[1]['nombre']);
+  Producto nuevo_producto = Producto(
+    codigo: (random.nextInt(99999) + 10000).toString(),
+    nombre: nombres_productos[random.nextInt(nombres_productos.length)],
+    precio: random.nextDouble() * 200 + 10,
+  );
+
+  // box.add(nuevo_producto); //AÑADE UN PRODUCTO
+
+  print(box.values.length);
 }
 
 class MyApp extends StatelessWidget {
@@ -113,7 +146,25 @@ class _MyHomePageState extends State<MyHomePage> {
                   // String nombre = value['nombre'];
                   // double precio = double.parse(value['precio']);
 
-                  if (value != null) productos.add(value);
+                  if (value != null) {
+                    //productos.add(value); //ESTO TENIAMOS ANTES
+
+                    /** ESTO ES CON HIVE */
+                    /** OJO!!! 
+                     *  VEAN EL MAIN
+                     *   AHÍ YA ABRÍ CON OPENBOX ('PRODUCTOS')
+                     *  POR ESO PUEDO USAR HIVE.BOX PORQUE YA ESTA ABIERTO
+                     *  SI HACEMOS BOX.CLOSE EN ALGUNA PARTE
+                     *  LA CAJA SE CIERRA Y DARA ERROR LO DE ABAJO
+                     *  POR LO TANTO ANTES DE USAR HIVE.BOX
+                     *  TENEMOS QUE ABRIR LA CAJA CON OPENBOX :)!
+                     */
+                    var producto = value;
+                    var box = Hive.box('productos');
+                    box.add(producto);
+
+                    print(box.values);
+                  }
                 },
               );
             },
