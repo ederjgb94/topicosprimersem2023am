@@ -9,6 +9,7 @@ class Producto {
   String nombre = '';
   @HiveField(2)
   double precio = 0.0;
+  //String create_date = DateTime.now();//11/09/2021 12:00:00
 
   Producto({
     required this.codigo,

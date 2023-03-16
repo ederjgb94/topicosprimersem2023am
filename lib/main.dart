@@ -3,7 +3,9 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:clasetopicosuno/producto.dart';
+import 'package:clasetopicosuno/vistas/carrito.dart';
 import 'package:clasetopicosuno/vistas/crear_producto.dart';
+import 'package:clasetopicosuno/vistas/test.dart';
 import 'package:clasetopicosuno/vistas/ver_productos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,7 +15,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async {
-  runApp(const MyApp());
+  runApp(MyApp());
 
   await Hive.initFlutter();
 
@@ -81,7 +83,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: CarritoPage(),
     );
   }
 }
