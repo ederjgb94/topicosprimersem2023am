@@ -1,75 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
-
-import 'package:clasetopicosuno/producto.dart';
-import 'package:clasetopicosuno/vistas/carrito.dart';
-import 'package:clasetopicosuno/vistas/crear_producto.dart';
-import 'package:clasetopicosuno/vistas/test.dart';
-import 'package:clasetopicosuno/vistas/ver_productos.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 
-void main() async {
-  runApp(MyApp());
-
-  await Hive.initFlutter();
-
-  Hive.registerAdapter(ProductoAdapter());
-
-  // List<Map<String, dynamic>> productos = [
-  //   {
-  //     'id': 1,
-  //     'codigo': '34402304',
-  //     'nombre': 'Coca',
-  //     'precio': 18,
-  //   },
-  //   {
-  //     'id': 2,
-  //     'codigo': '454544',
-  //     'nombre': 'Pepsi',
-  //     'precio': 19,
-  //   }
-  // ];
-  // box.put('productos', productos);
-  // List<dynamic> info = box.get('productos');
-  // var suma = info[1]['precio'] + info[0]['precio'];
-  // print(suma);
-
-  //*** */
-  //Probando Clases en Hive
-  //** */
-
-  var box = await Hive.openBox('productos');
-
-  //les paso el random para generar productos
-  //tipo aleatorios para apreciar mejor el ADD
-  var random = Random();
-
-  var nombres_productos = [
-    'Coca Cola',
-    'Pepsi',
-    'Fanta',
-    'Sprite',
-    'Manzana Verde',
-    'Manzana Roja',
-    'Manzana Amarilla',
-    'Manzana Blanca',
-    'Manzana Negra',
-  ];
-  Producto nuevo_producto = Producto(
-    codigo: (random.nextInt(99999) + 10000).toString(),
-    nombre: nombres_productos[random.nextInt(nombres_productos.length)],
-    precio: random.nextDouble() * 200 + 10,
-  );
-
-  // box.add(nuevo_producto); //AÑADE UN PRODUCTO
-
-  print(box.values.length);
+void main() {
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -78,43 +12,45 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: CarritoPage(),
+      home: const MyHomePage(
+        title: '',
+      ),
+      title: 'Flutter Demo',
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  final String title;
   const MyHomePage({
     super.key,
-    this.title = '',
+    required this.title,
   });
-
-  final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  TextEditingController codigoController = TextEditingController();
-  TextEditingController nombreController = TextEditingController();
-  TextEditingController precioController = TextEditingController();
-  bool errorNombre = false;
-  List<Producto> productos = [];
+  int cont = 0;
+
+  void suma() {
+    cont++;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        // title: Text(widget.title),
+        title: Text(widget.title),
         toolbarHeight: 0,
-        centerTitle: true,
+        // centerTitle: true,
         backgroundColor: Colors.transparent,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -122,93 +58,213 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         elevation: 0,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.teal.shade300,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 25,
+        ),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 15,
             ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return CrearProducto();
-                  },
-                ),
-              ).then(
-                (value) {
-                  // String codigo = value['codigo'];
-                  // String nombre = value['nombre'];
-                  // double precio = double.parse(value['precio']);
-
-                  if (value != null) {
-                    //productos.add(value); //ESTO TENIAMOS ANTES
-
-                    /** ESTO ES CON HIVE */
-                    /** OJO!!! 
-                     *  VEAN EL MAIN
-                     *   AHÍ YA ABRÍ CON OPENBOX ('PRODUCTOS')
-                     *  POR ESO PUEDO USAR HIVE.BOX PORQUE YA ESTA ABIERTO
-                     *  SI HACEMOS BOX.CLOSE EN ALGUNA PARTE
-                     *  LA CAJA SE CIERRA Y DARA ERROR LO DE ABAJO
-                     *  POR LO TANTO ANTES DE USAR HIVE.BOX
-                     *  TENEMOS QUE ABRIR LA CAJA CON OPENBOX :)!
-                     */
-                    var producto = value;
-                    var box = Hive.box('productos');
-                    box.add(producto);
-
-                    print(box.values);
-                  }
-                },
-              );
-            },
-            child: Text('Crear Producto'),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.pink.shade300,
+            Image.asset(
+              'assets/logo.png',
+              width: 200,
+              height: 200,
             ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return VerProductos(
-                      productos: productos,
-                    );
-                  },
+            const SizedBox(
+              height: 30,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: TextField(
+                decoration: InputDecoration(
+                  prefixIcon: Container(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 15,
+                    ),
+                    child: const Icon(
+                      Icons.email,
+                      color: Color(0xffE37D02),
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 0,
+                  ),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(35),
+                    ),
+                    // borderSide: BorderSide.none,
+                  ),
+                  labelText: 'Correo',
                 ),
-              );
-            },
-            child: Text('Ver Productos'),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Image.asset('assets/imagen.png'),
-        ],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  prefixIcon: Container(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 15,
+                    ),
+                    child: const Icon(
+                      Icons.lock,
+                      color: Color(0xffE37D02),
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 0,
+                  ),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(35),
+                    ),
+                  ),
+                  labelText: 'Contraseña',
+                  // prefix: const Icon(Icons.home),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton.icon(
+              onPressed: () {},
+              label: const Text('Login'),
+              icon: const Icon(
+                Icons.login,
+              ),
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(35),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 12,
+                ),
+                backgroundColor: const Color(0xffFF9301),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            const Text('Forgot Password?'),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Container(
+                    color: const Color.fromARGB(255, 181, 181, 181),
+                    // width: 150,
+                    height: 1,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                const Text('Or'),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Container(
+                    color: const Color.fromARGB(255, 181, 181, 181),
+                    // width: 150,
+                    height: 1,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    shape: const CircleBorder(
+                      side: BorderSide(
+                        color: Color(0xffFF9301),
+                        width: 1,
+                      ),
+                    ),
+                    backgroundColor: Colors.white,
+                    padding: const EdgeInsets.all(20),
+                  ),
+                  child: const Icon(
+                    EvaIcons.facebook,
+                    color: Color(0xffE37D02),
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    shape: const CircleBorder(
+                      side: BorderSide(
+                        color: Color(0xffFF9301),
+                        width: 1,
+                      ),
+                    ),
+                    backgroundColor: Colors.white,
+                    padding: const EdgeInsets.all(20),
+                  ),
+                  child: const Icon(
+                    EvaIcons.twitter,
+                    color: Color(0xffE37D02),
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    shape: const CircleBorder(
+                      side: BorderSide(
+                        color: Color(0xffFF9301),
+                        width: 1,
+                      ),
+                    ),
+                    backgroundColor: Colors.white,
+                    padding: const EdgeInsets.all(20),
+                  ),
+                  child: const Icon(
+                    EvaIcons.google,
+                    color: Color(0xffE37D02),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
       // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
+      //   onPressed: suma,
       //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
+      //   child: const Icon(
+      //     Icons.add,
+      //     size: 20,
+      //   ),
       // ),
     );
   }
-}
-
-//    () => null
-algo() {
-  return 4 + 5;
 }
