@@ -1,3 +1,5 @@
+import 'package:clasetopicosuno/vistas/almacen_vista.dart';
+import 'package:clasetopicosuno/widgets/custom_button_navigation.dart';
 import 'package:flutter/material.dart';
 
 class VentasVista extends StatefulWidget {
@@ -46,11 +48,25 @@ class VentasVistaState extends State<VentasVista> {
             //   },
             // ).toList(),
 
+            // children: [
+            //   for (String nombreProducto in nombreProductos)
+            //     Text(nombreProducto),
+            //   for (double precioProducto in precioProductos)
+            //     Text(precioProducto.toString()),
+            // ],
+
             children: [
-              for (String nombreProducto in nombreProductos)
-                Text(nombreProducto),
-              for (double precioProducto in precioProductos)
-                Text(precioProducto.toString()),
+              CustomButtonNavigation(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AlmacenVista(),
+                    ),
+                  );
+                },
+                label: 'Ir a Almacen',
+              ),
             ],
           ),
         ),
