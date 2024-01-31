@@ -1,3 +1,4 @@
+import 'package:clasetopicosuno/controladores/ventas_controller.dart';
 import 'package:clasetopicosuno/vistas/almacen_vista.dart';
 import 'package:clasetopicosuno/widgets/custom_button_navigation.dart';
 import 'package:flutter/material.dart';
@@ -10,23 +11,7 @@ class VentasVista extends StatefulWidget {
 }
 
 class VentasVistaState extends State<VentasVista> {
-  List<String> nombreProductos = <String>[
-    'Coca Cola',
-    'Pepsi',
-    'Fanta',
-    'Sprite',
-    'Manzana',
-    'Naranja',
-  ];
-
-  List<double> precioProductos = <double>[
-    10.0,
-    11.0,
-    12.0,
-    13.0,
-    14.0,
-    15.0,
-  ];
+  VentasController ventasController = VentasController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,42 +19,62 @@ class VentasVistaState extends State<VentasVista> {
       appBar: AppBar(
         title: const Text('Ventas'),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            // children: List.generate(
-            //   6,
-            //   (index) => const Text('a'),
-            // ),
-            // children: nombreProductos.map(
-            //   (String nombreProducto) {
-            //     return Text(nombreProducto);
-            //   },
-            // ).toList(),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          // children: List.generate(
+          //   6,
+          //   (index) => const Text('a'),
+          // ),
+          // children: nombreProductos.map(
+          //   (String nombreProducto) {
+          //     return Text(nombreProducto);
+          //   },
+          // ).toList(),
 
-            // children: [
-            //   for (String nombreProducto in nombreProductos)
-            //     Text(nombreProducto),
-            //   for (double precioProducto in precioProductos)
-            //     Text(precioProducto.toString()),
-            // ],
+          // children: [
+          //   for (String nombreProducto in nombreProductos)
+          //     Text(nombreProducto),
+          //   for (double precioProducto in precioProductos)
+          //     Text(precioProducto.toString()),
+          // ],
 
-            children: [
-              CustomButtonNavigation(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AlmacenVista(),
-                    ),
-                  );
-                },
-                label: 'Ir a Almacen',
+          // children: [
+          //   CustomButtonNavigation(
+          //     onPressed: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //           builder: (context) => const AlmacenVista(),
+          //         ),
+          //       );
+          //     },
+          //     label: 'Ir a Almacen',
+          //   ),
+          // ],
+
+          children: [
+            for (var producto in ventasController.verProductos())
+              ListTile(
+                title: Text(producto.nombre),
+                subtitle: Text(producto.precio.toString()),
+                trailing: IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: () {},
+                ),
+                leading: Text(
+                  producto.id.toString(),
+                ),
               ),
-            ],
-          ),
+          ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ventasController.agregarProductoAleatorio();
+          setState(() {});
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
