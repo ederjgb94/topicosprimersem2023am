@@ -1,3 +1,4 @@
+import 'package:clasetopicosuno/vistas/menu_vista.dart';
 import 'package:clasetopicosuno/vistas/ventas_vista.dart';
 import 'package:clasetopicosuno/vistas/vista_prueba.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const VentasVista(),
+      home: MenuVista(),
     );
   }
 }

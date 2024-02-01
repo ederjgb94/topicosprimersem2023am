@@ -1,10 +1,12 @@
 import 'package:clasetopicosuno/controladores/ventas_controller.dart';
+import 'package:clasetopicosuno/modelos/producto_model.dart';
 import 'package:clasetopicosuno/vistas/almacen_vista.dart';
 import 'package:clasetopicosuno/widgets/custom_button_navigation.dart';
 import 'package:flutter/material.dart';
 
 class VentasVista extends StatefulWidget {
-  const VentasVista({super.key});
+  final List<Producto> productos;
+  const VentasVista({super.key, required this.productos});
 
   @override
   VentasVistaState createState() => VentasVistaState();
@@ -54,7 +56,7 @@ class VentasVistaState extends State<VentasVista> {
           // ],
 
           children: [
-            for (var producto in ventasController.verProductos())
+            for (var producto in widget.productos)
               ListTile(
                 title: Text(producto.nombre),
                 subtitle: Text(producto.precio.toString()),
