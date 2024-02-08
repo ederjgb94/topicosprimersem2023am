@@ -3,11 +3,7 @@ import 'dart:math';
 import 'package:clasetopicosuno/modelos/producto_model.dart';
 
 class VentasController {
-  List<Producto> productos = [
-    Producto(id: 1, nombre: 'Coca', precio: 87.65),
-    Producto(id: 2, nombre: 'Pepsi', precio: 67.65),
-    Producto(id: 3, nombre: 'Fanta', precio: 57.65),
-  ];
+  List<Producto> productos = [];
 
   void agregarProducto(id, nombre, precio) {
     Producto producto = Producto(
@@ -36,7 +32,7 @@ class VentasController {
 
     productos.add(
       Producto(
-        id: Random().nextInt(100),
+        id: 'id${Random().nextInt(100)}',
         nombre: nombres[Random().nextInt(nombres.length)],
         precio: precios[Random().nextInt(precios.length)],
       ),

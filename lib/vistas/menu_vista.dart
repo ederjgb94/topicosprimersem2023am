@@ -1,17 +1,14 @@
 import 'package:clasetopicosuno/modelos/producto_model.dart';
 import 'package:clasetopicosuno/vistas/agregar_producto_vista.dart';
 import 'package:clasetopicosuno/vistas/ventas_vista.dart';
+import 'package:clasetopicosuno/vistas/ver_productos_vista.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class MenuVista extends StatelessWidget {
   MenuVista({Key? key}) : super(key: key);
 
-  final List<Producto> productos = [
-    Producto(id: 1, nombre: 'Coca', precio: 87.65),
-    Producto(id: 2, nombre: 'Pepsi', precio: 67.65),
-    Producto(id: 3, nombre: 'Fanta', precio: 57.65),
-  ];
+  final List<Producto> productos = [];
 
   @override
   Widget build(BuildContext context) {
@@ -50,17 +47,19 @@ class MenuVista extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  var box = Hive.box('personas');
-                  List<Producto> productos = [
-                    Producto(id: 1, nombre: 'Coca', precio: 87.65),
-                    Producto(id: 2, nombre: 'Pepsi', precio: 67.65),
-                    Producto(id: 3, nombre: 'Fanta', precio: 57.65),
-                  ];
-
-                  box.put(
-                    'personas',
-                    productos.map((producto) => producto.toMap()).toList(),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VerProductosVista(),
+                    ),
                   );
+                },
+                child: const Text('Ver Productos'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  var box = Hive.box('productos');
+
                   print(box.toMap());
                 },
                 child: const Text('Test Hive'),

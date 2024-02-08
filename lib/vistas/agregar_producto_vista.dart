@@ -1,8 +1,10 @@
+import 'package:clasetopicosuno/controladores/agregar_producto_controller.dart';
 import 'package:clasetopicosuno/modelos/producto_model.dart';
 import 'package:flutter/material.dart';
 
 class AgregarProductoVista extends StatelessWidget {
   final List<Producto> productos;
+  final AgregarProductoController controller = AgregarProductoController();
   final TextEditingController idController = TextEditingController();
   final TextEditingController nombreController = TextEditingController();
   final TextEditingController precioController = TextEditingController();
@@ -58,13 +60,7 @@ class AgregarProductoVista extends StatelessWidget {
                   String id = idController.text;
                   String nombre = nombreController.text;
                   String precio = precioController.text;
-                  productos.add(
-                    Producto(
-                      id: int.parse(id),
-                      nombre: nombre,
-                      precio: double.parse(precio),
-                    ),
-                  );
+                  controller.agregarProducto(id, nombre, precio);
                 },
                 child: const Text('Guardar'),
               ),
