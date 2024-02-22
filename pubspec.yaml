@@ -41,6 +41,7 @@ dependencies:
   path_provider: ^2.0.13
   flutter_barcode_scanner: ^2.0.0
   eva_icons_flutter: ^3.1.0
+  file_selector: ^1.0.3
 
 dev_dependencies:
   flutter_test:
