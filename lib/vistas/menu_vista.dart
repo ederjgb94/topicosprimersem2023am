@@ -2,6 +2,8 @@ import 'dart:typed_data';
 
 import 'package:clasetopicosuno/modelos/producto_model.dart';
 import 'package:clasetopicosuno/vistas/agregar_producto_vista.dart';
+import 'package:clasetopicosuno/vistas/categorias_vista.dart';
+import 'package:clasetopicosuno/vistas/crear_categoria_vista.dart';
 import 'package:clasetopicosuno/vistas/ventas_vista.dart';
 import 'package:clasetopicosuno/vistas/ver_imagen.dart';
 import 'package:clasetopicosuno/vistas/ver_productos_vista.dart';
@@ -88,6 +90,32 @@ class MenuVista extends StatelessWidget {
                   );
                 },
                 child: const Text('Abrir archico'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return CrearCategoriaVista();
+                      },
+                    ),
+                  );
+                },
+                child: const Text('Crear Categoria'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return CategoriasVista();
+                      },
+                    ),
+                  );
+                },
+                child: const Text('Categorias'),
               ),
             ],
           ),

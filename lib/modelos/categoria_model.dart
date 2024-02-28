@@ -1,0 +1,3 @@
+class Categoria {
+  String nombre = '';
+}
