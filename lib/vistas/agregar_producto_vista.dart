@@ -1,14 +1,37 @@
 import 'package:clasetopicosuno/controladores/agregar_producto_controller.dart';
+import 'package:clasetopicosuno/modelos/categoria_model.dart';
 import 'package:clasetopicosuno/modelos/producto_model.dart';
 import 'package:flutter/material.dart';
 
-class AgregarProductoVista extends StatelessWidget {
+class AgregarProductoVista extends StatefulWidget {
   final List<Producto> productos;
+
+  const AgregarProductoVista({super.key, required this.productos});
+
+  @override
+  State<AgregarProductoVista> createState() => _AgregarProductoVistaState();
+}
+
+class _AgregarProductoVistaState extends State<AgregarProductoVista> {
   final AgregarProductoController controller = AgregarProductoController();
+
   final TextEditingController idController = TextEditingController();
+
   final TextEditingController nombreController = TextEditingController();
+
   final TextEditingController precioController = TextEditingController();
-  AgregarProductoVista({super.key, required this.productos});
+
+  late String currentValue;
+
+  List<Categoria> categorias = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    categorias = controller.obtenerCategorias();
+    currentValue = categorias[0].nombre;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +73,21 @@ class AgregarProductoVista extends StatelessWidget {
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
               ),
+            ),
+            DropdownButton(
+              value: currentValue,
+              items: categorias
+                  .map(
+                    (categoria) => DropdownMenuItem(
+                      value: categoria.nombre,
+                      child: Text(categoria.nombre),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (categoria) {
+                currentValue = categoria.toString();
+                setState(() {});
+              },
             ),
             const SizedBox(
               height: 10,

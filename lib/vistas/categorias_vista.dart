@@ -1,5 +1,6 @@
 import 'package:clasetopicosuno/controladores/categorias_controller.dart';
 import 'package:clasetopicosuno/vistas/crear_categoria_vista.dart';
+import 'package:clasetopicosuno/vistas/editar_categoria_vista.dart';
 import 'package:flutter/material.dart';
 
 class CategoriasVista extends StatefulWidget {
@@ -32,7 +33,15 @@ class _CategoriasVistaState extends State<CategoriasVista> {
                         Icons.edit,
                         color: Colors.teal.shade300,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return EditarCategoria(
+                            categoria: categorias[i].nombre,
+                            index: i,
+                          );
+                        })).whenComplete(() => setState(() {}));
+                      },
                     ),
                     IconButton(
                       icon: Icon(

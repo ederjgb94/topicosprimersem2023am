@@ -1,3 +1,4 @@
+import 'package:clasetopicosuno/modelos/categoria_model.dart';
 import 'package:hive/hive.dart';
 
 class AgregarProductoController {
@@ -18,5 +19,16 @@ class AgregarProductoController {
       var productos = Hive.box('productos');
       productos.put(id, {'id': id, 'nombre': nombre, 'precio': precio});
     }
+  }
+
+  List<Categoria> obtenerCategorias() {
+    var categorias = Hive.box('categorias');
+    List<Categoria> listaCategorias = [];
+    for (var i = 0; i < categorias.length; i++) {
+      Categoria categoria = Categoria();
+      categoria.nombre = categorias.getAt(i);
+      listaCategorias.add(categoria);
+    }
+    return listaCategorias;
   }
 }
