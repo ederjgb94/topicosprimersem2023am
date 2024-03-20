@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "992301814737",
+    "project_id": "nubebonita-9bf3e",
+    "storage_bucket": "nubebonita-9bf3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992301814737:android:28d5c008dd9a4765b2c6f0",
+        "android_client_info": {
+          "package_name": "com.example.clasetopicosuno"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3vvP4X-CDBlxhXmvDkLgxtrTptyxg9ug"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
